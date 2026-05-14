@@ -21,9 +21,7 @@ function detectInitialTheme(): Theme {
         return stored;
     }
 
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "business"
-        : "corporate";
+    return "business";
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {

@@ -29,21 +29,22 @@ export default function DashboardPage() {
             {isLoading || !metrics ? (
                 <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                     {Array.from({ length: 8 }).map((_, index) => (
-                        <div key={index} className="skeleton h-28 w-full rounded-xl" />
+                        <div key={index} className="skeleton h-32 w-full rounded-2xl" />
                     ))}
                 </div>
             ) : (
                 <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-                    <StatCard label="Total Companies" value={metrics.totalCompanies} />
-                    <StatCard label="Total Jobs" value={metrics.totalJobs} />
-                    <StatCard label="Applications" value={metrics.totalApplications} />
-                    <StatCard label="Applications This Month" value={metrics.applicationsThisMonth} />
-                    <StatCard label="Interviews" value={metrics.interviewsScheduled} />
-                    <StatCard label="Offers" value={metrics.offersReceived} />
-                    <StatCard label="Rejections" value={metrics.rejectionCount} />
+                    <StatCard label="Total Companies" value={metrics.totalCompanies} hint="Tracked organizations" />
+                    <StatCard label="Total Jobs" value={metrics.totalJobs} hint="Saved opportunities" />
+                    <StatCard label="Applications" value={metrics.totalApplications} hint="All-time submissions" />
+                    <StatCard label="Applications This Month" value={metrics.applicationsThisMonth} hint="Current month pace" />
+                    <StatCard label="Interviews" value={metrics.interviewsScheduled} hint="Pipeline meetings" />
+                    <StatCard label="Offers" value={metrics.offersReceived} hint="Positive outcomes" />
+                    <StatCard label="Rejections" value={metrics.rejectionCount} hint="Closed loops" />
                     <StatCard
                         label="Response / Interview Rate"
                         value={`${metrics.responseRate}% / ${metrics.interviewConversionRate}%`}
+                        hint="Funnel efficiency"
                     />
                 </section>
             )}

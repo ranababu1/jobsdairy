@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: corporate --default, business --prefersdark;
+  themes: business --default, corporate --preferslight;
 }
 
 :root {
@@ -25,9 +25,11 @@
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at 20% 10%, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 35%),
-    radial-gradient(circle at 80% 0%, color-mix(in oklab, var(--color-secondary) 10%, transparent), transparent 40%),
-    var(--background);
+  background:
+    radial-gradient(circle at 12% 8%, color-mix(in oklab, var(--color-primary) 22%, transparent), transparent 34%),
+    radial-gradient(circle at 88% 0%, color-mix(in oklab, var(--color-secondary) 18%, transparent), transparent 40%),
+    radial-gradient(circle at 50% 120%, color-mix(in oklab, var(--color-accent) 10%, transparent), transparent 45%),
+    linear-gradient(180deg, color-mix(in oklab, var(--color-base-100) 96%, black 4%), var(--color-base-200));
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
 }
@@ -35,4 +37,74 @@ body {
 .glass {
   backdrop-filter: blur(12px);
   background: color-mix(in oklab, var(--color-base-100) 85%, transparent);
+}
+
+.surface-card {
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  background: linear-gradient(160deg,
+      color-mix(in oklab, var(--color-base-100) 88%, transparent),
+      color-mix(in oklab, var(--color-base-100) 70%, transparent));
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 12%, transparent),
+    0 8px 30px color-mix(in oklab, black 30%, transparent);
+}
+
+.surface-soft {
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 10%, transparent);
+  background: color-mix(in oklab, var(--color-base-100) 80%, transparent);
+}
+
+.stat-value-gradient {
+  background: linear-gradient(135deg,
+      color-mix(in oklab, var(--color-primary) 86%, white 14%),
+      color-mix(in oklab, var(--color-secondary) 82%, white 18%));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.app-noise-bg {
+  position: relative;
+}
+
+.app-noise-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: radial-gradient(color-mix(in oklab, var(--color-base-content) 25%, transparent) 0.8px, transparent 0.8px);
+  background-size: 3px 3px;
+}
+
+@keyframes float-soft {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 420ms ease-out both;
+}
+
+.float-soft {
+  animation: float-soft 8s ease-in-out infinite;
 }

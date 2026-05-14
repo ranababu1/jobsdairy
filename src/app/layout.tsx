@@ -22,7 +22,7 @@ const themeScript = `
   (function () {
     try {
       var stored = localStorage.getItem('jobdairy-theme');
-      var theme = stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'business' : 'corporate');
+      var theme = stored || 'business';
       document.documentElement.setAttribute('data-theme', theme);
     } catch (e) {
       document.documentElement.setAttribute('data-theme', 'business');
