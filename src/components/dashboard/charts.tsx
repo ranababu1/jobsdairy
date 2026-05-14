@@ -35,9 +35,12 @@ export function DashboardCharts({
 }) {
     return (
         <section className="grid gap-5 xl:grid-cols-2">
-            <article className="surface-card card animate-fade-up">
+            <article className="surface-card card dashboard-mesh animate-fade-up">
                 <div className="card-body p-5">
-                    <h3 className="text-lg font-semibold">Applications by Month</h3>
+                    <div className="mb-2 flex items-center justify-between">
+                        <h3 className="text-lg font-semibold">Applications by Month</h3>
+                        <span className="badge badge-outline">Trend</span>
+                    </div>
                     <div className="h-64">
                         <ResponsiveContainer width="100%" height="100%">
                             <BarChart data={applicationsByMonth as ChartPoint[]}>
@@ -51,9 +54,12 @@ export function DashboardCharts({
                     </div>
                 </div>
             </article>
-            <article className="surface-card card animate-fade-up">
+            <article className="surface-card card dashboard-mesh animate-fade-up">
                 <div className="card-body p-5">
-                    <h3 className="text-lg font-semibold">Status Distribution</h3>
+                    <div className="mb-2 flex items-center justify-between">
+                        <h3 className="text-lg font-semibold">Status Distribution</h3>
+                        <span className="badge badge-outline">Breakdown</span>
+                    </div>
                     <div className="h-64">
                         <ResponsiveContainer width="100%" height="100%">
                             <PieChart>
@@ -65,7 +71,7 @@ export function DashboardCharts({
                                         />
                                     ))}
                                 </Pie>
-                                <Legend />
+                                <Legend iconType="circle" />
                                 <Tooltip />
                             </PieChart>
                         </ResponsiveContainer>

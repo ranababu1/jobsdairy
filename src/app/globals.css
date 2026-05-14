@@ -108,3 +108,25 @@ body {
 .float-soft {
   animation: float-soft 8s ease-in-out infinite;
 }
+
+.dashboard-mesh {
+  position: relative;
+  overflow: hidden;
+}
+
+.dashboard-mesh::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(130deg, color-mix(in oklab, var(--color-primary) 18%, transparent), transparent 42%),
+    linear-gradient(290deg, color-mix(in oklab, var(--color-secondary) 14%, transparent), transparent 50%);
+  opacity: 0.45;
+}
+
+.kpi-pill {
+  border: 1px solid color-mix(in oklab, var(--color-base-content) 12%, transparent);
+  background: color-mix(in oklab, var(--color-base-100) 76%, transparent);
+  backdrop-filter: blur(8px);
+}
