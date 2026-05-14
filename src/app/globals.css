@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: corporate --default, business --prefersdark;
+}
+
+:root {
+  --background: oklch(97% 0 0);
+  --foreground: oklch(20% 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(16% 0.01 262);
+    --foreground: oklch(94% 0.01 262);
+  }
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at 20% 10%, color-mix(in oklab, var(--color-primary) 12%, transparent), transparent 35%),
+    radial-gradient(circle at 80% 0%, color-mix(in oklab, var(--color-secondary) 10%, transparent), transparent 40%),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+.glass {
+  backdrop-filter: blur(12px);
+  background: color-mix(in oklab, var(--color-base-100) 85%, transparent);
+}
