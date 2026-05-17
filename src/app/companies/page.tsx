@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ColumnDef } from "@tanstack/react-table";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 import { AppShell } from "@/components/layout/app-shell";
 import { DataTable } from "@/components/ui/data-table";
 import { PageHeader } from "@/components/ui/page-header";
@@ -60,7 +61,7 @@ export default function CompaniesPage() {
     const updateCompany = useUpdateCompany();
     const deleteCompany = useDeleteCompany();
 
-    const form = useForm<CompanyInput>({
+    const form = useForm<z.input<typeof companySchema>, unknown, CompanyInput>({
         resolver: zodResolver(companySchema),
         defaultValues: {
             name: "",

@@ -6,8 +6,6 @@ import { eq } from "drizzle-orm";
 import { jobSchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
-export const runtime = "edge";
-
 export async function PUT(
     request: NextRequest,
     context: { params: Promise<{ id: string }> },
@@ -18,7 +16,7 @@ export async function PUT(
         const { id } = await context.params;
         const jobId = Number(id);
         const payload = jobSchema.partial().parse(await request.json());
-        
+
         const result = await getDb().update(jobs).set(payload).where(eq(jobs.id, jobId)).returning();
 
         if (result.length === 0) {
@@ -32,14 +30,14 @@ export async function PUT(
 }
 
 export async function DELETE(
-    _request: NextRequest,
+    request: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const jobId = Number(id);
-    
+
     const result = await getDb().delete(jobs).where(eq(jobs.id, jobId)).returning();
 
     if (result.length === 0) {

@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import type { D1Database } from "@cloudflare/workers-types";
 
 const app = new Hono<{ Bindings: { DB: D1Database } }>();
 

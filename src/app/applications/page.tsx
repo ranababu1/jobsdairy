@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ColumnDef } from "@tanstack/react-table";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 import { AppShell } from "@/components/layout/app-shell";
 import { DataTable } from "@/components/ui/data-table";
 import { PageHeader } from "@/components/ui/page-header";
@@ -68,7 +69,7 @@ export default function ApplicationsPage() {
     const updateApplication = useUpdateApplication();
     const deleteApplication = useDeleteApplication();
 
-    const form = useForm<ApplicationInput>({
+    const form = useForm<z.input<typeof applicationSchema>, unknown, ApplicationInput>({
         resolver: zodResolver(applicationSchema),
         defaultValues: {
             jobId: 1,

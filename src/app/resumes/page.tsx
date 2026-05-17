@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ColumnDef } from "@tanstack/react-table";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 import { AppShell } from "@/components/layout/app-shell";
 import { DataTable } from "@/components/ui/data-table";
 import { PageHeader } from "@/components/ui/page-header";
@@ -48,7 +49,7 @@ export default function ResumesPage() {
     const createResume = useCreateResume();
     const deleteResume = useDeleteResume();
 
-    const form = useForm<ResumeInput>({
+    const form = useForm<z.input<typeof resumeSchema>, unknown, ResumeInput>({
         resolver: zodResolver(resumeSchema),
         defaultValues: {
             versionName: "",

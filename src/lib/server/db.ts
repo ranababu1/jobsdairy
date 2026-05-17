@@ -1,19 +1,20 @@
 import { drizzle } from "drizzle-orm/d1";
-import { getRequestContext } from "@cloudflare/next-on-pages";
+import { getCloudflareContext } from "@opennextjs/cloudflare";
+import type { D1Database } from "@cloudflare/workers-types";
 import * as schema from "../../../drizzle/schema";
 
 export function getDb() {
-    let dbBinding: D1Database;
-    
+    let dbBinding: D1Database | undefined;
+
     try {
-        const ctx = getRequestContext();
-        dbBinding = ctx.env.DB;
-        
+        const ctx = getCloudflareContext();
+        dbBinding = (ctx.env as { DB?: D1Database }).DB as D1Database;
+
         if (!dbBinding) {
-            console.error("DEBUG: getRequestContext().env.DB is undefined. Available env keys:", Object.keys(ctx.env || {}));
+            console.error("DEBUG: getCloudflareContext().env.DB is undefined. Available env keys:", Object.keys(ctx.env || {}));
         }
     } catch (e) {
-        console.error("DEBUG: getRequestContext() threw an error:", e);
+        console.error("DEBUG: getCloudflareContext() threw an error:", e);
     }
 
     if (!dbBinding) {

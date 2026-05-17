@@ -6,8 +6,6 @@ import { eq } from "drizzle-orm";
 import { companySchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
-export const runtime = "edge";
-
 export async function PUT(
     request: NextRequest,
     context: { params: Promise<{ id: string }> },
@@ -18,7 +16,7 @@ export async function PUT(
         const { id } = await context.params;
         const companyId = Number(id);
         const payload = companySchema.partial().parse(await request.json());
-        
+
         const tags = payload.tags
             ? payload.tags
                 .split(",")
@@ -26,7 +24,7 @@ export async function PUT(
                 .filter(Boolean)
                 .join(",")
             : undefined;
-            
+
         const result = await getDb().update(companies).set({
             ...payload,
             ...(tags !== undefined && { tags }),
@@ -43,14 +41,14 @@ export async function PUT(
 }
 
 export async function DELETE(
-    _request: NextRequest,
+    request: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const companyId = Number(id);
-    
+
     const result = await getDb().delete(companies).where(eq(companies.id, companyId)).returning();
 
     if (result.length === 0) {

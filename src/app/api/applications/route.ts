@@ -4,7 +4,7 @@ import { db } from "@/lib/server/store";
 import { applicationSchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
     return NextResponse.json(db.applications);

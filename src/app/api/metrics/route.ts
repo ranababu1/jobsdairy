@@ -1,15 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import dayjs from "dayjs";
 import { requireApiSession } from "@/lib/server/auth-guard";
 import { getDb } from "@/lib/server/db";
 import { applications, companies, jobs, resumes } from "../../../../drizzle/schema";
 
-export const runtime = "edge";
-
-export async function GET() {
+export async function GET(request: NextRequest) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
-    
+
     const db = getDb();
     const allCompanies = await db.select().from(companies);
     const allJobs = await db.select().from(jobs);

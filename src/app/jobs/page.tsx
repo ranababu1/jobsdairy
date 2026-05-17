@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ColumnDef } from "@tanstack/react-table";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { z } from "zod";
 import { AppShell } from "@/components/layout/app-shell";
 import { DataTable } from "@/components/ui/data-table";
 import { PageHeader } from "@/components/ui/page-header";
@@ -43,7 +44,7 @@ export default function JobsPage() {
     const createJob = useCreateJob();
     const deleteJob = useDeleteJob();
 
-    const form = useForm<JobInput>({
+    const form = useForm<z.input<typeof jobSchema>, unknown, JobInput>({
         resolver: zodResolver(jobSchema),
         defaultValues: {
             companyId: 1,

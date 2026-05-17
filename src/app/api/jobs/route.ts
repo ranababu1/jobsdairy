@@ -5,9 +5,7 @@ import { jobs } from "../../../../drizzle/schema";
 import { jobSchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
-export const runtime = "edge";
-
-export async function GET() {
+export async function GET(request: NextRequest) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
     const data = await getDb().select().from(jobs);

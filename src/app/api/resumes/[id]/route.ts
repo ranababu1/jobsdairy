@@ -4,17 +4,15 @@ import { getDb } from "@/lib/server/db";
 import { resumes } from "../../../../../drizzle/schema";
 import { eq } from "drizzle-orm";
 
-export const runtime = "edge";
-
 export async function DELETE(
-    _request: NextRequest,
+    request: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const resumeId = Number(id);
-    
+
     const result = await getDb().delete(resumes).where(eq(resumes.id, resumeId)).returning();
 
     if (result.length === 0) {

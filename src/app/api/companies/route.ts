@@ -5,12 +5,10 @@ import { companies } from "../../../../drizzle/schema";
 import { companySchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
-export const runtime = "edge";
-
-export async function GET() {
+export async function GET(request: NextRequest) {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
-    
+
     const data = await getDb().select().from(companies);
     return NextResponse.json(data);
 }
@@ -36,7 +34,7 @@ export async function POST(request: NextRequest) {
             notes: payload.notes || null,
             priority: payload.priority,
         }).returning();
-        
+
         return NextResponse.json(result[0], { status: 201 });
     } catch (error) {
         return handleError(error);

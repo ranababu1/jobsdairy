@@ -1,8 +1,15 @@
-name = "jobdairy-worker"
-main = "worker/src/index.ts"
+name = "jobsdairy"
+main = ".open-next/worker.js"
 compatibility_date = "2026-05-14"
-compatibility_flags = ["nodejs_compat"]
-pages_build_output_dir = ".vercel/output/static"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[[services]]
+binding = "WORKER_SELF_REFERENCE"
+service = "jobsdairy"
 
 [[d1_databases]]
 binding = "DB"

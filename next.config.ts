@@ -1,14 +1,13 @@
 import type { NextConfig } from "next";
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 
 const nextConfig: NextConfig = {
   /* config options here */
-  reactCompiler: true,
+  serverExternalPackages: ["jose", "@panva/hkdf"],
 };
 
-export default async () => {
-  if (process.env.NODE_ENV === 'development') {
-    const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
-    await setupDevPlatform();
-  }
-  return nextConfig;
-};
+if (process.env.NODE_ENV === "development") {
+  initOpenNextCloudflareForDev();
+}
+
+export default nextConfig;
