@@ -17,9 +17,11 @@ export async function POST(request: NextRequest) {
     if (unauthorized) return unauthorized;
     try {
         const payload = jobSchema.parse(await request.json());
+        const createdAt = new Date().toISOString();
         const result = await getDb().insert(jobs).values({
             ...payload,
             jobUrl: payload.jobUrl || null,
+            createdAt,
         }).returning();
         return NextResponse.json(result[0], { status: 201 });
     } catch (error) {

@@ -1,3 +1,4 @@
+import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
 export const companies = sqliteTable("companies", {
@@ -10,7 +11,7 @@ export const companies = sqliteTable("companies", {
     tags: text("tags"),
     notes: text("notes"),
     priority: text("priority"),
-    createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),
+    createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
 export const jobs = sqliteTable("jobs", {
@@ -24,7 +25,7 @@ export const jobs = sqliteTable("jobs", {
     source: text("source"),
     status: text("status"),
     notes: text("notes"),
-    createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),
+    createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
 export const resumes = sqliteTable("resumes", {
@@ -33,7 +34,7 @@ export const resumes = sqliteTable("resumes", {
     focusArea: text("focus_area"),
     fileUrl: text("file_url"),
     notes: text("notes"),
-    createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),
+    createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });
 
 export const applications = sqliteTable("applications", {
@@ -45,5 +46,5 @@ export const applications = sqliteTable("applications", {
     recruiterName: text("recruiter_name"),
     recruiterEmail: text("recruiter_email"),
     notes: text("notes"),
-    createdAt: text("created_at").default("CURRENT_TIMESTAMP").notNull(),
+    createdAt: text("created_at").default(sql`CURRENT_TIMESTAMP`).notNull(),
 });

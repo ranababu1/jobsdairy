@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
     if (unauthorized) return unauthorized;
     try {
         const payload = companySchema.parse(await request.json());
+        const createdAt = new Date().toISOString();
         const result = await getDb().insert(companies).values({
             name: payload.name,
             careersUrl: payload.careersUrl || null,
@@ -33,6 +34,7 @@ export async function POST(request: NextRequest) {
                 : null,
             notes: payload.notes || null,
             priority: payload.priority,
+            createdAt,
         }).returning();
 
         return NextResponse.json(result[0], { status: 201 });
