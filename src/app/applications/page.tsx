@@ -117,7 +117,7 @@ export default function ApplicationsPage() {
                 description="Track stage progression, recruiter details, and follow-up reminders."
             />
 
-            <section className="card border border-base-300/70 bg-base-100/80 shadow">
+            <section className="surface-card card">
                 <form className="card-body grid gap-3 md:grid-cols-5" onSubmit={submit}>
                     <select className="select select-bordered" {...form.register("jobId", { valueAsNumber: true })}>
                         {jobsQuery.data?.map((job) => (

@@ -108,7 +108,7 @@ export default function CompaniesPage() {
                 description="Manage target companies, notes, categories, tags, and priorities."
             />
 
-            <section className="card border border-base-300/70 bg-base-100/80 shadow">
+            <section className="surface-card card">
                 <form className="card-body grid gap-3 md:grid-cols-4" onSubmit={submit}>
                     <input className="input input-bordered" placeholder="Company name" {...form.register("name")} />
                     <select className="select select-bordered" {...form.register("category")}>

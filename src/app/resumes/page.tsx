@@ -84,7 +84,7 @@ export default function ResumesPage() {
                 description="Track resume versions, focus areas, and performance across applications."
             />
 
-            <section className="card border border-base-300/70 bg-base-100/80 shadow">
+            <section className="surface-card card">
                 <form className="card-body grid gap-3 md:grid-cols-5" onSubmit={submit}>
                     <input className="input input-bordered" placeholder="Version name" {...form.register("versionName")} />
                     <input className="input input-bordered" placeholder="Focus area" {...form.register("focusArea")} />

@@ -29,7 +29,7 @@ export default function DashboardPage() {
                 description="Track your entire job hunt lifecycle from one high-signal control center."
                 action={
                     metrics ? (
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2 md:min-w-72">
                             <div className="kpi-pill rounded-xl px-3 py-2">
                                 <p className="text-[11px] uppercase tracking-[0.12em] text-base-content/60">Response Rate</p>
                                 <p className="text-lg font-semibold text-primary">{metrics.responseRate}%</p>
@@ -63,7 +63,7 @@ export default function DashboardPage() {
                         value={metrics.applicationsThisMonth}
                         hint="Current month pace"
                     />
-                    <article className="surface-card card animate-fade-up xl:col-span-4">
+                    <article className="surface-card card animate-fade-up overflow-hidden xl:col-span-4">
                         <div className="card-body p-4 md:p-5">
                             <p className="text-xs uppercase tracking-[0.14em] text-base-content/60">Funnel Health</p>
                             <div className="mt-3 grid grid-cols-2 gap-4">

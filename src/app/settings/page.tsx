@@ -13,7 +13,7 @@ export default function SettingsPage() {
                 title="Settings"
                 description="Account and environment details for your personal career CRM."
             />
-            <section className="card border border-base-300/70 bg-base-100/80 shadow">
+            <section className="surface-card card">
                 <div className="card-body gap-4">
                     <div>
                         <p className="text-xs uppercase text-base-content/60">Signed in as</p>

@@ -15,8 +15,8 @@ export default function SignInPage() {
     }, [router, status]);
 
     return (
-        <main className="grid min-h-screen place-items-center bg-base-200 p-6">
-            <section className="card w-full max-w-md border border-base-300 bg-base-100 shadow-2xl">
+        <main className="app-noise-bg grid min-h-screen place-items-center bg-base-200 p-6">
+            <section className="surface-card card w-full max-w-md shadow-2xl">
                 <div className="card-body">
                     <h1 className="text-2xl font-semibold">Sign in to JobDairy</h1>
                     <p className="text-sm text-base-content/70">

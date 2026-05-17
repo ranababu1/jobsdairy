@@ -27,7 +27,7 @@ function Card({ item }: { item: Application }) {
         <div
             ref={setNodeRef}
             style={{ transform: CSS.Translate.toString(transform) }}
-            className="card cursor-grab border border-base-300 bg-base-100 shadow"
+            className="surface-card card cursor-grab transition-transform hover:-translate-y-0.5"
             {...attributes}
             {...listeners}
         >
@@ -51,7 +51,7 @@ function Column({
     return (
         <div
             ref={setNodeRef}
-            className={`rounded-xl border p-3 ${isOver ? "border-primary bg-primary/10" : "border-base-300 bg-base-100/70"
+            className={`rounded-2xl border p-3 transition-colors ${isOver ? "border-primary bg-primary/10" : "border-base-content/12 bg-base-100/60"
                 }`}
         >
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide">{column}</h3>

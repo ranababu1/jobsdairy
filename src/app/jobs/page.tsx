@@ -78,7 +78,7 @@ export default function JobsPage() {
                 description="Store opportunity details, track status, and map every role to a company."
             />
 
-            <section className="card border border-base-300/70 bg-base-100/80 shadow">
+            <section className="surface-card card">
                 <form className="card-body grid gap-3 md:grid-cols-4" onSubmit={submit}>
                     <select className="select select-bordered" {...form.register("companyId", { valueAsNumber: true })}>
                         {companiesQuery.data?.map((company) => (
