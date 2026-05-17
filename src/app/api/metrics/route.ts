@@ -5,7 +5,7 @@ import { getDb } from "@/lib/server/db";
 import { applications, companies, jobs, resumes } from "../../../../drizzle/schema";
 
 export async function GET(request: NextRequest) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
 
     const db = getDb();

@@ -8,7 +8,7 @@ export async function DELETE(
     request: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const resumeId = Number(id);

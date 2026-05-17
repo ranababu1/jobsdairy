@@ -10,7 +10,7 @@ export async function PUT(
     request: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
     try {
         const { id } = await context.params;
@@ -33,7 +33,7 @@ export async function DELETE(
     request: NextRequest,
     context: { params: Promise<{ id: string }> },
 ) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const applicationId = Number(id);

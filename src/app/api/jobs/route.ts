@@ -6,14 +6,14 @@ import { jobSchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
 export async function GET(request: NextRequest) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
     const data = await getDb().select().from(jobs);
     return NextResponse.json(data);
 }
 
 export async function POST(request: NextRequest) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
     try {
         const payload = jobSchema.parse(await request.json());

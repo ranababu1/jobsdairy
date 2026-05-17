@@ -6,7 +6,7 @@ import { companySchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
 
 export async function GET(request: NextRequest) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
 
     const data = await getDb().select().from(companies);
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-    const unauthorized = await requireApiSession();
+    const unauthorized = await requireApiSession(request);
     if (unauthorized) return unauthorized;
     try {
         const payload = companySchema.parse(await request.json());
