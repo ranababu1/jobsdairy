@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireApiSession } from "@/lib/server/auth-guard";
-import { db } from "@/lib/server/store";
+import { getDb } from "@/lib/server/db";
+import { companies } from "../../../../drizzle/schema";
 import { companySchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
+
+export const runtime = "edge";
 
 export async function GET() {
     const unauthorized = await requireApiSession();
     if (unauthorized) return unauthorized;
-    return NextResponse.json(db.companies);
+    
+    const data = await getDb().select().from(companies);
+    return NextResponse.json(data);
 }
 
 export async function POST(request: NextRequest) {
@@ -15,23 +20,24 @@ export async function POST(request: NextRequest) {
     if (unauthorized) return unauthorized;
     try {
         const payload = companySchema.parse(await request.json());
-        const company = db.createCompany({
+        const result = await getDb().insert(companies).values({
             name: payload.name,
-            careersUrl: payload.careersUrl || undefined,
-            linkedinUrl: payload.linkedinUrl || undefined,
-            location: payload.location || undefined,
-            category: payload.category || undefined,
+            careersUrl: payload.careersUrl || null,
+            linkedinUrl: payload.linkedinUrl || null,
+            location: payload.location || null,
+            category: payload.category || null,
             tags: payload.tags
                 ? payload.tags
                     .split(",")
                     .map((tag) => tag.trim())
                     .filter(Boolean)
-                : [],
-            notes: payload.notes || undefined,
+                    .join(",")
+                : null,
+            notes: payload.notes || null,
             priority: payload.priority,
-            archived: payload.archived,
-        });
-        return NextResponse.json(company, { status: 201 });
+        }).returning();
+        
+        return NextResponse.json(result[0], { status: 201 });
     } catch (error) {
         return handleError(error);
     }

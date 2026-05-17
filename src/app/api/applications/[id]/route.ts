@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireApiSession } from "@/lib/server/auth-guard";
-import { db } from "@/lib/server/store";
+import { getDb } from "@/lib/server/db";
+import { applications } from "../../../../../drizzle/schema";
+import { eq } from "drizzle-orm";
 import { applicationSchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
+
+export const runtime = "edge";
 
 export async function PUT(
     request: NextRequest,
@@ -14,20 +18,14 @@ export async function PUT(
         const { id } = await context.params;
         const applicationId = Number(id);
         const payload = applicationSchema.partial().parse(await request.json());
-        const index = db.applications.findIndex(
-            (application) => application.id === applicationId,
-        );
+        
+        const result = await getDb().update(applications).set(payload).where(eq(applications.id, applicationId)).returning();
 
-        if (index === -1) {
+        if (result.length === 0) {
             return NextResponse.json({ message: "Application not found" }, { status: 404 });
         }
 
-        db.applications[index] = {
-            ...db.applications[index],
-            ...payload,
-        };
-
-        return NextResponse.json(db.applications[index]);
+        return NextResponse.json(result[0]);
     } catch (error) {
         return handleError(error);
     }
@@ -41,14 +39,12 @@ export async function DELETE(
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const applicationId = Number(id);
-    const index = db.applications.findIndex(
-        (application) => application.id === applicationId,
-    );
+    
+    const result = await getDb().delete(applications).where(eq(applications.id, applicationId)).returning();
 
-    if (index === -1) {
+    if (result.length === 0) {
         return NextResponse.json({ message: "Application not found" }, { status: 404 });
     }
 
-    const [deleted] = db.applications.splice(index, 1);
-    return NextResponse.json(deleted);
+    return NextResponse.json(result[0]);
 }

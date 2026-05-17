@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireApiSession } from "@/lib/server/auth-guard";
-import { db } from "@/lib/server/store";
+import { getDb } from "@/lib/server/db";
+import { jobs } from "../../../../../drizzle/schema";
+import { eq } from "drizzle-orm";
 import { jobSchema } from "@/lib/validators/schemas";
 import { handleError } from "@/lib/server/http";
+
+export const runtime = "edge";
 
 export async function PUT(
     request: NextRequest,
@@ -14,18 +18,14 @@ export async function PUT(
         const { id } = await context.params;
         const jobId = Number(id);
         const payload = jobSchema.partial().parse(await request.json());
-        const index = db.jobs.findIndex((job) => job.id === jobId);
+        
+        const result = await getDb().update(jobs).set(payload).where(eq(jobs.id, jobId)).returning();
 
-        if (index === -1) {
+        if (result.length === 0) {
             return NextResponse.json({ message: "Job not found" }, { status: 404 });
         }
 
-        db.jobs[index] = {
-            ...db.jobs[index],
-            ...payload,
-        };
-
-        return NextResponse.json(db.jobs[index]);
+        return NextResponse.json(result[0]);
     } catch (error) {
         return handleError(error);
     }
@@ -39,12 +39,12 @@ export async function DELETE(
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const jobId = Number(id);
-    const index = db.jobs.findIndex((job) => job.id === jobId);
+    
+    const result = await getDb().delete(jobs).where(eq(jobs.id, jobId)).returning();
 
-    if (index === -1) {
+    if (result.length === 0) {
         return NextResponse.json({ message: "Job not found" }, { status: 404 });
     }
 
-    const [deleted] = db.jobs.splice(index, 1);
-    return NextResponse.json(deleted);
+    return NextResponse.json(result[0]);
 }

@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-  themes: business --default, corporate --preferslight;
+  themes: black --default;
 }
 
 :root {
-  --background: oklch(97% 0 0);
-  --foreground: oklch(20% 0 0);
+  --background: #050505;
+  --foreground: #ededed;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
 }
 
 @theme inline {
@@ -14,88 +16,88 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: oklch(16% 0.01 262);
-    --foreground: oklch(94% 0.01 262);
-  }
+  --color-primary: #5e6ad2;
+  --color-secondary: #26b5ce;
+  --color-accent: #c43eb1;
+  --color-base-100: #0a0a0a;
+  --color-base-200: #111111;
+  --color-base-300: #1a1a1a;
+  --color-base-content: #ededed;
 }
 
 body {
   min-height: 100vh;
-  background:
-    radial-gradient(circle at 10% 8%, color-mix(in oklab, var(--color-primary) 20%, transparent), transparent 36%),
-    radial-gradient(circle at 90% 4%, color-mix(in oklab, var(--color-secondary) 16%, transparent), transparent 41%),
-    radial-gradient(circle at 48% 118%, color-mix(in oklab, var(--color-accent) 12%, transparent), transparent 47%),
-    linear-gradient(180deg, color-mix(in oklab, var(--color-base-100) 95%, black 5%), var(--color-base-200));
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), sans-serif;
+  font-family: var(--font-sans), sans-serif;
+  /* Sleek modern gradient */
+  background-image: 
+    radial-gradient(ellipse 60% 50% at 50% -10%, rgba(94, 106, 210, 0.15), transparent),
+    radial-gradient(ellipse 60% 50% at 90% 110%, rgba(38, 181, 206, 0.10), transparent);
+  background-attachment: fixed;
 }
 
-.glass {
+/* Premium Component Overrides */
+.card {
+  background: rgba(15, 15, 15, 0.6);
   backdrop-filter: blur(12px);
-  background: color-mix(in oklab, var(--color-base-100) 85%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px -1px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .surface-card {
-  border: 1px solid color-mix(in oklab, var(--color-base-content) 14%, transparent);
-  background: linear-gradient(160deg,
-      color-mix(in oklab, var(--color-base-100) 92%, transparent),
-      color-mix(in oklab, var(--color-base-100) 76%, transparent));
-  box-shadow:
-    inset 0 1px 0 color-mix(in oklab, white 14%, transparent),
-    0 10px 32px color-mix(in oklab, black 34%, transparent);
-  border-radius: 1.2rem;
+  background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(10, 10, 10, 0.9));
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
 }
 
 .surface-soft {
-  border: 1px solid color-mix(in oklab, var(--color-base-content) 10%, transparent);
-  background: color-mix(in oklab, var(--color-base-100) 80%, transparent);
+  background: rgba(25, 25, 25, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}
+
+.glass {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(10, 10, 10, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .stat-value-gradient {
-  background: linear-gradient(135deg,
-      color-mix(in oklab, var(--color-primary) 86%, white 14%),
-      color-mix(in oklab, var(--color-secondary) 82%, white 18%));
+  background: linear-gradient(135deg, #fff 20%, #a0a0a0 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.app-noise-bg {
-  position: relative;
+/* Typography refinements */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
 }
 
-.app-noise-bg::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.04;
-  background-image: radial-gradient(color-mix(in oklab, var(--color-base-content) 25%, transparent) 0.8px, transparent 0.8px);
-  background-size: 3px 3px;
-}
-
-@keyframes float-soft {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-8px);
-  }
+.kpi-pill {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(20, 20, 20, 0.7);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(12px);
   }
-
   to {
     opacity: 1;
     transform: translateY(0);
@@ -103,31 +105,53 @@ body {
 }
 
 .animate-fade-up {
-  animation: fade-up 420ms ease-out both;
+  animation: fade-up 500ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.float-soft {
-  animation: float-soft 8s ease-in-out infinite;
-}
+/* Stagger animations automatically */
+.animate-fade-up:nth-child(1) { animation-delay: 50ms; }
+.animate-fade-up:nth-child(2) { animation-delay: 100ms; }
+.animate-fade-up:nth-child(3) { animation-delay: 150ms; }
+.animate-fade-up:nth-child(4) { animation-delay: 200ms; }
+.animate-fade-up:nth-child(5) { animation-delay: 250ms; }
+.animate-fade-up:nth-child(6) { animation-delay: 300ms; }
+.animate-fade-up:nth-child(7) { animation-delay: 350ms; }
+.animate-fade-up:nth-child(8) { animation-delay: 400ms; }
 
+/* Dashboard specific mesh */
 .dashboard-mesh {
   position: relative;
   overflow: hidden;
 }
 
-.dashboard-mesh::after {
+.dashboard-mesh::before {
   content: "";
   position: absolute;
   inset: 0;
+  background: 
+    linear-gradient(120deg, rgba(94, 106, 210, 0.08) 0%, transparent 50%),
+    linear-gradient(240deg, rgba(38, 181, 206, 0.08) 0%, transparent 50%);
   pointer-events: none;
-  background:
-    linear-gradient(130deg, color-mix(in oklab, var(--color-primary) 18%, transparent), transparent 42%),
-    linear-gradient(290deg, color-mix(in oklab, var(--color-secondary) 14%, transparent), transparent 50%);
-  opacity: 0.35;
+  z-index: 0;
 }
 
-.kpi-pill {
-  border: 1px solid color-mix(in oklab, var(--color-base-content) 12%, transparent);
-  background: color-mix(in oklab, var(--color-base-100) 76%, transparent);
-  backdrop-filter: blur(8px);
+.dashboard-mesh > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Premium Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.1); 
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25); 
 }

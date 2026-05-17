@@ -5,4 +5,10 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
 };
 
-export default nextConfig;
+export default async () => {
+  if (process.env.NODE_ENV === 'development') {
+    const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
+    await setupDevPlatform();
+  }
+  return nextConfig;
+};

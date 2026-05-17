@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireApiSession } from "@/lib/server/auth-guard";
-import { db } from "@/lib/server/store";
+import { getDb } from "@/lib/server/db";
+import { resumes } from "../../../../../drizzle/schema";
+import { eq } from "drizzle-orm";
+
+export const runtime = "edge";
 
 export async function DELETE(
     _request: NextRequest,
@@ -10,12 +14,12 @@ export async function DELETE(
     if (unauthorized) return unauthorized;
     const { id } = await context.params;
     const resumeId = Number(id);
-    const index = db.resumes.findIndex((resume) => resume.id === resumeId);
+    
+    const result = await getDb().delete(resumes).where(eq(resumes.id, resumeId)).returning();
 
-    if (index === -1) {
+    if (result.length === 0) {
         return NextResponse.json({ message: "Resume not found" }, { status: 404 });
     }
 
-    const [deleted] = db.resumes.splice(index, 1);
-    return NextResponse.json(deleted);
+    return NextResponse.json(result[0]);
 }
